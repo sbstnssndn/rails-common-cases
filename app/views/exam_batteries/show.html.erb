@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @exam_battery.name %>
+</p>
+
+<p>
+  <strong>Certification:</strong>
+  <%= @exam_battery.certification %>
+</p>
+
+<%= link_to 'Edit', edit_exam_battery_path(@exam_battery) %> |
+<%= link_to 'Back', exam_batteries_path %>

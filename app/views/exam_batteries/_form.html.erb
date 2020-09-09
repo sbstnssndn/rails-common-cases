@@ -1,0 +1,64 @@
+<%= form_with(model: exam_battery, local: true) do |form| %>
+  <% if exam_battery.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(exam_battery.errors.count, "error") %> prohibited this exam_battery from being saved:</h2>
+
+      <ul>
+      <% exam_battery.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :certification %>
+    <%= form.text_field :certification %>
+  </div>
+
+  <div class="exam-fields">
+    <%= form.fields_for :exams do |builder| %>
+      <fieldset>
+        <div class="field">
+          <%= builder.label :name %>
+          <%= builder.text_field :name %>
+        </div>
+
+        <div class="field">
+          <%= builder.label :description %>
+          <%= builder.text_field :description %>
+        </div>
+
+        <div class="field">
+          <%= builder.label :order %>
+          <%= builder.text_field :order %>
+        </div>
+
+        <div class="field">
+          <% selected = exam_battery.exams[builder.options[:child_index]].exam_batteries.map { |eb| eb.id } %>
+          <%= builder.label :exam_battery_ids, 'Escoge una batería' %>
+          <%= builder.select :exam_battery_ids,
+            options_from_collection_for_select(ExamBattery.all, :id, :name, selected),
+            {
+              include_hidden: false,
+              prompt: 'Ninguna'
+            },
+            multiple: true %>
+        </div>
+
+        <div class="field">
+          <%= builder.options[:child_index] %>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
