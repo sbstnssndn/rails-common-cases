@@ -1,6 +1,5 @@
 class ExamBatteriesController < ApplicationController
   before_action :set_exam_battery, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
 
   # GET /exam_batteries
   # GET /exam_batteries.json
